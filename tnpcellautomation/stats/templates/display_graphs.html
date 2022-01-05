@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="media">
+        <div class="media-body">
+            <img src="{{ graph }}" height=300 width=300 style="object-fit:fill;">   
+            <h3> {{ title }} </h3>
+        </div>
+    </div>
+{% endblock content %}

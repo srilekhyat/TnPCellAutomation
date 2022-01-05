@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1 style="margin-top: 20px"> List of Opportunities </h1>
+
+{% if user.is_superuser %}
+    <a href="{% url 'add-ops' %}" class="btn btn-dark btn-lg" role="button"> Add Opportunity </a>
+    <h1 style="margin-top: 20px"> </h1>
+{% endif %}
+
+<div class="dropdown show">
+    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select an Option
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#" onclick="changeToAll()"> All Opportunities </a>
+    <a class="dropdown-item" href="#" onclick="changeToInterested()"> Interested Opportunities </a>
+    <a class="dropdown-item" href="#" onclick="changetoUninterested()"> Uninterested Opportunities </a>
+    </div>
+</div>
+
+<div id=1>
+    {% for j in opportunities %}
+    <div class="container-fluid" style="background-color: rgba(227, 231, 235, 0.4); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3); margin-top: 15px;">
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Title: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.title }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Company Name: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.company_name }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Description: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.description }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Eligibility: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.eligibility }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Link to Apply: </h6> 
+            </div>
+            <div class="col">
+                <a href="{{ j.link_to_apply }}"> Link to Apply </a>
+            </div>
+        </div>
+
+        {% if j in interested %}
+            <div class="row align-items-start">
+                <div class="col">
+                    <a href="{% url 'removefrominterests' j.id %}" class="btn btn-secondary btn-sm" role="button" aria-disabled="true"> Remove from Interested </a>
+                </div>
+            </div>
+        {% else %}
+        <div class="row align-items-start">
+            <div class="col">
+                <a href="{% url 'addtointerests' j.id %}" class="btn btn-dark btn-sm" role="button" aria-disabled="false"> Interested </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <p style="margin-top: 5px;"> </p>
+            <a href="{% url 'edit-opp' j.id %}" class="btn btn-dark btn-sm" role="button"> Edit </a>
+            <a href="{% url 'delete-ops' j.id %}" class="btn btn-danger btn-sm" role="button"> Delete </a>
+        {% endif %}
+
+    </div>
+{% endfor %}
+</div>
+
+<div id=2 style="display: none;">
+    {% for j in opportunities %}
+    <div class="container-fluid" style="background-color: rgba(220, 220, 220, 0.671); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.596); margin-top: 15px;">
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Title: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.title }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Company Name: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.company_name }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Description: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.description }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Eligibility: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.eligibility }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Link to Apply: </h6> 
+            </div>
+            <div class="col">
+                <a href="{{ j.link_to_apply }}"> Link to Apply </a>
+            </div>
+        </div>
+
+        {% if j in interested %}
+            <div class="row align-items-start">
+                <div class="col">
+                    <a href="{% url 'addtointerests' j.id %}" class="btn btn-secondary btn-sm" role="button" aria-disabled="true"> Interested </a>
+                </div>
+            </div>
+        {% else %}
+        <div class="row align-items-start">
+            <div class="col">
+                <a href="{% url 'addtointerests' j.id %}" class="btn btn-dark btn-sm" role="button" aria-disabled="false"> Interested </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <p style="margin-top: 5px;"> </p>
+            <a href="{% url 'edit-opp' j.id %}" class="btn btn-dark btn-sm" role="button"> Edit </a>
+            <a href="{% url 'delete-ops' j.id %}" class="btn btn-danger btn-sm" role="button"> Delete </a>
+        {% endif %}
+
+    </div>
+{% endfor %}
+</div>
+
+<div id=3 style="display: none;">
+    {% for j in interested %}
+    <div class="container-fluid" style="background-color: rgba(220, 220, 220, 0.671); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.596); margin-top: 15px;">
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Title: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.title }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Company Name: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.company_name }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Description: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.description }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Eligibility: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.eligibility }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Link to Apply: </h6> 
+            </div>
+            <div class="col">
+                <a href="{{ j.link_to_apply }}"> Link to Apply </a>
+            </div>
+        </div>
+
+        {% if j in interested %}
+            <div class="row align-items-start">
+                <div class="col">
+                    <a href="{% url 'addtointerests' j.id %}" class="btn btn-secondary btn-sm" role="button" aria-disabled="true"> Interested </a>
+                </div>
+            </div>
+        {% else %}
+        <div class="row align-items-start">
+            <div class="col">
+                <a href="{% url 'addtointerests' j.id %}" class="btn btn-dark btn-sm" role="button" aria-disabled="false"> Interested </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <p style="margin-top: 5px;"> </p>
+            <a href="{% url 'edit-opp' j.id %}" class="btn btn-dark btn-sm" role="button"> Edit </a>
+            <a href="{% url 'delete-ops' j.id %}" class="btn btn-danger btn-sm" role="button"> Delete </a>
+        {% endif %}
+
+    </div>
+{% endfor %}
+</div>
+
+<div id=4 style="display: none;">
+    {% for j in not_interested %}
+    <div class="container-fluid" style="background-color: rgba(220, 220, 220, 0.671); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.596); margin-top: 15px;">
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Title: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.title }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Company Name: </h6>
+            </div>
+            <div class="col">
+                <p> {{ j.company_name }} </p>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Description: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.description }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Eligibility: </h6> 
+            </div>
+            <div class="col">
+                <p> {{ j.eligibility }}  </p>
+            </div>
+        </div>
+
+        <div class="row align-items-start">
+            <div class="col">
+                <h6> Link to Apply: </h6> 
+            </div>
+            <div class="col">
+                <a href="{{ j.link_to_apply }}"> Link to Apply </a>
+            </div>
+        </div>
+
+        {% if j in interested %}
+            <div class="row align-items-start">
+                <div class="col">
+                    <a href="{% url 'addtointerests' j.id %}" class="btn btn-secondary btn-sm" role="button" aria-disabled="true"> Interested </a>
+                </div>
+            </div>
+        {% else %}
+        <div class="row align-items-start">
+            <div class="col">
+                <a href="{% url 'addtointerests' j.id %}" class="btn btn-dark btn-sm" role="button" aria-disabled="false"> Interested </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_superuser %}
+            <p style="margin-top: 5px;"> </p>
+            <a href="{% url 'edit-opp' j.id %}" class="btn btn-dark btn-sm" role="button"> Edit </a>
+            <a href="{% url 'delete-ops' j.id %}" class="btn btn-danger btn-sm" role="button"> Delete </a>
+        {% endif %}
+
+    </div>
+{% endfor %}
+</div>
+
+<script>
+    function changeToAll() {
+      document.getElementById("1").innerHTML = document.getElementById("2").innerHTML;
+    }
+
+    function changeToInterested() {
+        document.getElementById("1").innerHTML = document.getElementById("3").innerHTML;
+    }
+
+    function changetoUninterested() {
+        document.getElementById("1").innerHTML = document.getElementById("4").innerHTML;
+    }
+</script>
+
+
+{% endblock content %}

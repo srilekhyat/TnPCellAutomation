@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+<style>
+    .added-block {
+        margin-top: 90px;
+    }
+
+    .hover-card {
+        cursor: pointer; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); 
+        height: 80px; 
+        margin: 20px; 
+        padding: 20px;
+    }
+</style>
+</head>
+
+<body style="background-color: #e8e8e848; padding: 25px;">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-lg navbar-dark" style="background-color: #072A40;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> TnP </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item {{ home }} ">
+                        <a class="nav-link px-3" href="{% url 'home' %}"> Home </a>
+                    </li>
+                    <li class="nav-item {{ opp_page }}">
+                        <a class="nav-link px-3" href="{% url 'display' %}"> Opportunities </a>
+                    </li>
+                    <li class="nav-item {{ stat }}">
+                        <a class="nav-link px-3" href="{% url 'stats_page' %}"> Statistics </a>
+                    </li>
+                    <li class="nav-item {{ lm }}">
+                        <a class="nav-link px-3" href="{% url 'lrng_mtrl' %}"> Learning Material </a>
+                    </li>
+                    <li class="nav-item {{ qa }}">
+                        <a class="nav-link px-3" href="{% url 'qa' %}"> Q/A </a>
+                    </li>
+                </ul>
+            </div>
+            {% if user.is_superuser or user.is_professor %}
+                <form class="d-flex" action="{% url 'search' %}" method="POST">
+                    {% csrf_token %}
+                    <input class="form-control me-2" style="margin-right:5px;" type="search" placeholder="Search . . . " aria-label="Search" name="q">
+                    <button class="btn btn-outline-success" style="margin-right:5px;" type="submit"> Search </button>
+                </form>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="{% url 'logout' %}"> <button class="btn btn-outline-success" type="submit"> Logout </button> </a>
+                </li>
+                {% if not user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="{% url 'profile' user.username %}"> <button style="background-color: #072A40;" class="btn"><i class="fa fa-user-circle-o" style="font-size: 20px; border: none; color: white;"></i></button> </a>
+                </li>
+                {% endif %}
+            </ul>
+            {% else %}
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="{% url 'login' %}"> <button class="btn btn-outline-success" type="submit"> Login </button> </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-2" href="{% url 'register' %}"> <button class="btn btn-outline-success" type="submit"> Register </button> </a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="added-block">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script>
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 style="margin-top: 100px; margin-left: 50px;"> Welcome to User Registration! </h1>
+    <h4 style="margin-left: 50px;"> Please choose an option. </h4>
+    <div class="container py-5">
+        <a href="{% url 'stud_register' %}" class="btn btn-info btn-lg" role="button"> I am a Student. </a>
+        <a href="{% url 'prof_register' %}" class="btn btn-secondary btn-lg" role="button"> I am a Professor. </a>
+    </div>
+{% endblock content %}

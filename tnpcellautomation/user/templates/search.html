@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <h1>Search</h1> 
+
+  {% for s in search_results %} 
+    <a href="{% url 'profile' s.username %}"> {{ s.username }} </a>
+  {% endfor %}
+
+{% endblock content %}

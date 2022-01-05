@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'add_qa' %}" class="btn btn-dark btn-lg" role="button"> Ask Question </a>
+
+{% if valid %}
+    {% for q in questions %}   
+    <div class="container-fluid" style="background-color: rgba(246, 248, 250, 0.4); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3); margin-top: 15px;">
+            <h6> Question: </h6>
+            <p> {{ q.ques }} </p>
+            {% if user.is_superuser %}
+                <a href="{% url 'add_ans' q.id %}" class="btn btn-primary btn-sm" role="button"> Answer </a>
+            {% endif %}
+            <a href="{% url 'show_ans' q.id %}" class="btn btn-primary btn-sm" role="button"> Show Answers </a>
+        </div>
+    {% endfor %}
+{% else %} 
+    <div style="height: 50%; margin-top: 300px; text-align: center;">
+        <h5> No Questions :( </h5>
+    </div>
+{% endif %}
+
+{% endblock content %}

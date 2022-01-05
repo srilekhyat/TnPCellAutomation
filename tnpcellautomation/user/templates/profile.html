@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  <div class="row justify-content-md-center" style="margin: 15px;">
+    <div class="col-md-auto">
+      <div class="media">
+        <div class="media-body">
+          <img src="{{ form.instance.image.url }}" height=300 width=300 style="object-fit:fill;"> 
+        </div>
+      </div>
+    </div>
+    {% if isMyProfile %}
+    <div class="col-md-auto">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit"> Save </button>
+      </form>
+    </div>
+    {% else %}
+    <div class="col-md-auto">
+      <form>
+        {% for field in form %}
+                {% if not field.label in "Image" %}
+                  <p> {{ field.label }}: {{ field.value }} </p>
+                {% endif %}
+        {% endfor %}
+      </form>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if isMyProfile %}
+    <br>
+    <h3> Interested Opportunities </h3> 
+    <hr>
+    {% for o in liked_opps %}
+      <div class="container-fluid" style="background-color: rgba(246, 248, 250, 0.4); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3); margin-top: 15px;">
+        <h5> {{ o.job.title }} </h5>
+        <h6> {{ o.job.company_name }} </h6>
+        <a href="{{ o.job.link_to_apply }}"> Link to Apply </a>
+        <br>
+        <p></p>
+        <a href="{% url 'removefrominterests' o.job.id %}" class="btn btn-secondary btn-sm" role="button" aria-disabled="true"> Remove from Interested </a>
+      </div>
+    {% endfor %}
+    <br>
+    <br>
+    <h3> Your Questions </h3>
+    <hr>
+    {% for q in asked_ques %}
+    <div class="container-fluid" style="background-color: rgba(246, 248, 250, 0.4); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3); margin-top: 15px;">
+      <h6> Question: {{ q.ques }} </h6> 
+      <a href="{% url 'show_ans' q.id %}" class="btn btn-primary btn-sm" role="button"> Show Answers </a>
+    </div>
+    {% endfor %}
+    <br>
+  {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1> {{ topic.topic }} </h1>
+    <hr>
+    <h2> {{ topic.title1 }} </h2>
+    <p> {{ topic.description1 }} </p>
+    <hr>
+    <h2> {{ topic.title2 }} </h2>
+    <p> {{ topic.description2 }} </p>
+    <hr>
+    <h2> {{ topic.title3 }} </h2>
+    <p> {{ topic.description3 }} </p>
+
+    {% if user.is_superuser %}
+        <a href="{% url 'edit-topic' topic.id %}" class="btn btn-dark btn-md" style="margin: auto;"> Edit </a>
+        <a href="{% url 'delete-topic' topic.id %}" class="btn btn-danger btn-md" style="margin: auto;"> Delete </a>
+    {% endif %}
+    
+{% endblock content %}

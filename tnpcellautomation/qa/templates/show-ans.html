@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    {% if valid %}
+        <h5> Question: </h5>
+        <h6> {{ question.ques }} </h6>
+        {% for a in answers %} 
+            <div class="container-fluid" style="background-color: rgba(246, 248, 250, 0.4); padding: 10px; box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.3); margin-top: 15px;">
+                <p> {{ a.ans }} </p>
+            </div>
+        {% endfor %}
+        <br>
+        <a href="{% url 'qa' %}" class="btn btn-dark btn-lg" role="button"> Go Back </a>
+    {% else %}
+        <div style="height: 50%; margin-top: 300px; text-align: center;">
+            <h5> No Answers :( </h5>
+            <a href="{% url 'qa' %}" class="btn btn-dark btn-lg" role="button"> Go Back </a>
+        </div>
+    {% endif %}
+{% endblock content %}

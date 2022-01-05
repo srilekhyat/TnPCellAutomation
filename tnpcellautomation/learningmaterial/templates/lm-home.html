@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <!-- <h1 style="margin-top: 100px;"></h1> -->
+    {% if user.is_superuser %}
+      <a href="{% url 'add_concept' %}" class="btn btn-info btn-lg" role="button"> Add Concept </a>
+    {% endif %}
+    <br>
+    {% if not valid %}
+      <div style="height: 50%; margin-top: 300px; text-align: center;">
+        <h5> No Concepts Available :( </h5>
+      </div>
+    {% else %}
+      {% for c in concepts %}
+        <div class="container-fluid" style="margin-top:30px; float:left; height: 300px; width: 300px;" onclick=location.href="{% url 'lm-topics' c.id %}">
+          <div class="media">
+            <div class="media-body">
+              <div class="card text-dark bg-light mb-3" style="height: 20rem; width: 18rem; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+                <img src="{{ c.image.url }}" style="height: 12rem;"> 
+                <div class="card card-body flex-fill">
+                  <h5 class="card-text" style="text-align: center;"> {{ c.concept }} </h5>
+                  <div style="margin: auto;">
+                    <a href="{% url 'lm-topics' c.id %}" class="btn btn-dark btn-sm" style="margin: auto;"> Let's Go! </a> 
+                    {% if user.is_superuser %}
+                      <a href="{% url 'delete-lm' c.id %}" class="btn btn-danger btn-sm" style="margin: auto;"> Delete </a>
+                      <a href="{% url 'edit-lm' c.id %}" class="btn btn-primary btn-sm" style="margin: auto;"> Edit </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <!-- <img src="{{ c.image.url }}" height=200 width=200 style="object-fit:fill;">  -->
+              <!-- <h1> {{ c.concept }} </h1> -->
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+
+{% endblock content %}

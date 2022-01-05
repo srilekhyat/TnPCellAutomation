@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        <a href="{% url 'add-topics' id %}" class="btn btn-dark btn-lg" role="button"> Add Topic </a>
+        <h1 style="margin-top: 20px"> </h1>
+    {% endif %}
+
+    {% if not valid %}
+      <div style="height: 50%; margin-top: 300px; text-align: center;">
+        <h5> No Topics Available :( </h5>
+      </div>
+    {% else %}
+        {% for t in topics %}
+            <div class="hover-card" onclick=location.href="{% url 'lm-info' t.id %}">
+                <h2> {{ t.topic }} </h2>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}

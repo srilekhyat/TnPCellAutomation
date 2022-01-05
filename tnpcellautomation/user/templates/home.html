@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <h1 style="margin: 70px;"></h1>
+  
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    
+    <!-- The slideshow -->
+    <div class="carousel-inner" style="margin: auto;">
+      <div class="carousel-item active">
+        <img src="{% static 'elearning9.png' %}" class="d-block mx-auto" width="100%" height="500">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'elearning8.png' %}" class="d-block mx-auto" width="100%" height="500">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'elearning7.png' %}" class="d-block mx-auto" width="100%" height="500">
+      </div>
+      <!--<div class="carousel-item">
+        <img src="{% static 'P1.svg' %}" width="100%" height="500">
+      </div>-->
+    </div>
+    
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+
+  <br>
+  <h1> About </h1>
+  <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+  <h1> Explore </h1>
+
+  <div class="container" style="margin: auto;">
+    <div class="row justify-content-md-center" style="margin: 15px;">
+      <div class="col-md-auto text-center">
+        <div class="card text-dark bg-light mb-3" style="width: 18rem; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+          <img src="{% static 'opp.png' %}" class="card-img-top" style="height: 12rem;">
+          <div class="card-body">
+            <h5 class="card-text" style="text-align: center;"> View Opportunities </h5>
+            <a href="{% url 'display' %}" class="btn btn-primary stretched-link" style="margin: auto;"> Let's Go! </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-auto text-center">
+        <div class="card text-dark bg-light mb-3" style="width: 18rem; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+          <img src="{% static 'ques.jpg' %}" class="card-img-top" style="height: 12rem;">
+          <div class="card-body">
+            <h5 class="card-text" style="text-align: center;"> Ask Questions </h5>
+            <a href="{% url 'qa' %}" class="btn btn-primary stretched-link" style="margin: auto;"> Let's Go! </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto text-center">
+        <div class="card" style="width: 18rem; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+          <img src="{% static 'graphs2.png' %}" class="card-img-top" style="height: 12rem;">
+          <div class="card-body" style="align-items: center;">
+            <h5 class="card-text" style="text-align: center;"> View Statistics </h5>
+            <a href="{% url 'stats_page' %}" class="btn btn-primary stretched-link" style="margin: auto;"> Let's Go! </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-auto text-center">
+        <div class="card" style="width: 18rem; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+          <img src="{% static 'learn.jpg' %}" class="card-img-top" style="height: 12rem;">
+          <div class="card-body">
+            <h5 class="card-text" style="text-align: center;"> View Learning Material </h5>
+            <a href="{% url 'lrng_mtrl' %}" class="btn btn-primary stretched-link" style="margin: auto;"> Let's Go! </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock content %}

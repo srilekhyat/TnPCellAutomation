@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div style="height: 50%; margin-top: 300px; text-align: center;">
+        {% if has_applied %}
+            <h5> You've already applied to this! </h5>
+        {% endif %}
+        <h5> Click the button to apply! </h5>
+        <a href="{{ link }}" class="btn btn-dark btn" role="button"> Apply </a>
+        <a href="{% url 'display_opps' %}" class="btn btn-dark btn" role="button"> Go Back </a>
+    </div>
+{% endblock content %}
